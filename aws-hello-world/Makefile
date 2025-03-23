@@ -9,15 +9,15 @@ DOCKER_CONTEXT=./docker
 all: build push
 
 build:
-	@echo "👉 Building Docker image for platform: linux/amd64"
+	@echo "Building Docker image for platform: linux/amd64"
 	docker buildx build --platform linux/amd64 -t ${REPO_URL}:latest ${DOCKER_CONTEXT} --load
 
 login:
-	@echo "🔐 Logging in to Amazon ECR..."
+	@echo "Logging in to Amazon ECR..."
 	aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${REPO_URL}
 
 push: login
-	@echo "📤 Pushing Docker image to ECR..."
+	@echo "Pushing Docker image to ECR..."
 	docker push ${REPO_URL}:latest
-	@echo "✅ Done! Image pushed: ${REPO_URL}:latest"
+	@echo "Done! Image pushed: ${REPO_URL}:latest"
 
